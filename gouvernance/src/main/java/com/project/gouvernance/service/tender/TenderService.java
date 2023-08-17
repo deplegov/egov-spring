@@ -13,6 +13,8 @@ public interface TenderService {
 
     public List<Tender> getAllTender();
 
+    public List<Tender> getAllTenderFilter(String date1, String date2, String status);
+
     public Tender getTender(String id) throws TenderCollectionException;
 
     public void updateTender(String id, Tender tender) throws TenderCollectionException;

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.gouvernance.exception.TenderCollectionException;
+import com.project.gouvernance.model.Soumission;
 import com.project.gouvernance.model.Tender;
 import com.project.gouvernance.service.tender.TenderService;
 
@@ -41,6 +42,14 @@ public class TenderController {
     public ResponseEntity<?> getAllTender() {
         List<Tender> tenders = tenderService.getAllTender();
         return new ResponseEntity<>(tenders, tenders.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/tender/filter")
+    public ResponseEntity<?> getAllTenderFilter(@RequestParam(name = "date1", required = false) String date1,
+            @RequestParam(name = "date2", required = false) String date2,
+            @RequestParam(name = "status", required = false) String status) {
+        List<Tender> tender = tenderService.getAllTenderFilter(date1, date2, status);
+        return new ResponseEntity<>(tender, tender.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/tender/{id}")

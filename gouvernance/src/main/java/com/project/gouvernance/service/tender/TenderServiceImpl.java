@@ -1,5 +1,7 @@
 package com.project.gouvernance.service.tender;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,6 +41,38 @@ public class TenderServiceImpl implements TenderService {
             return tenders;
         else
             return new ArrayList<Tender>();
+    }
+
+    @Override
+    public List<Tender> getAllTenderFilter(String date1, String date2, String status) {
+        List<Tender> tenders = new ArrayList<Tender>();
+        if (date1 != null && date2 != null && status == null) {
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date parsedDate1 = dateFormat.parse(date1);
+                Date parsedDate2 = dateFormat.parse(date2);
+
+                tenders = tenderRepo.findBetweenTwoDate(parsedDate1, parsedDate2);
+            } catch (ParseException e) {
+                // Handle parsing exception
+            }
+        } else if (status != null && date1 == null && date2 == null) {
+            tenders = tenderRepo.findBySoumissionStatus(Integer.parseInt(status));
+        } else if (date1 != null && date2 != null && status != null) {
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date parsedDate1 = dateFormat.parse(date1);
+                Date parsedDate2 = dateFormat.parse(date2);
+
+                tenders = tenderRepo.findBetweenTwoDateAndSoumissionStatus(parsedDate1, parsedDate2,
+                        Integer.parseInt(status));
+            } catch (ParseException e) {
+                // Handle parsing exception
+            }
+        } else {
+            tenders = tenderRepo.findAll();
+        }
+        return tenders;
     }
 
     @Override

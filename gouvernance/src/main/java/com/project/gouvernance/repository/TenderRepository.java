@@ -1,5 +1,7 @@
 package com.project.gouvernance.repository;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -13,4 +15,14 @@ public interface TenderRepository extends MongoRepository<Tender, String> {
 
     @Query("{'reference': ?0}")
     Optional<Tender> findByReference(String reference);
+
+    @Query("{'dateLimit': {'$gte': ?0, '$lte': ?1}}")
+    List<Tender> findBetweenTwoDate(Date date1, Date date2);
+
+    @Query("{'soumission.status': ?0}")
+    List<Tender> findBySoumissionStatus(Integer status);
+
+     @Query("{'dateLimit': {'$gte': ?0, '$lte': ?1},'soumission.status': ?2}")
+    List<Tender> findBetweenTwoDateAndSoumissionStatus(Date date1, Date date2,Integer status);
+
 }
