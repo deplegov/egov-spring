@@ -1,7 +1,5 @@
 package com.project.gouvernance.model;
 
-import java.util.Date;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,17 +13,15 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "soumission")
-public class Soumission {
+@Document(collection = "critere")
+public class Critere {
+
     @Id
     private String id;
 
     @NotNull
-    private Society society;
+    private String entitle;
 
     @NotNull
-    private Date dateSoumission;
-
-    @NotNull
-    private Integer status;
+    private String description;
 }

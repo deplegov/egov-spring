@@ -10,60 +10,58 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.gouvernance.exception.TenderCollectionException;
-import com.project.gouvernance.model.Tender;
-import com.project.gouvernance.service.tender.TenderService;
+import com.project.gouvernance.exception.SocietyCollectionException;
+import com.project.gouvernance.model.Society;
+import com.project.gouvernance.service.society.SocietyService;
 
 import jakarta.validation.ConstraintViolationException;
 
 @RestController
-public class TenderController {
+public class SocietyController {
 
     @Autowired
-    private TenderService tenderService;
+    private SocietyService societyService;
 
-    @PostMapping("/tender/create")
-    public ResponseEntity<?> createTender(@RequestBody Tender tender) {
+    @PostMapping("/society/create")
+    public ResponseEntity<?> createSociety(@RequestBody Society society) {
         try {
-            tenderService.createTender(tender);
-            return new ResponseEntity<Tender>(tender, HttpStatus.OK);
+            societyService.createSociety(society);
+            return new ResponseEntity<Society>(society, HttpStatus.OK);
         } catch (ConstraintViolationException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
-        } catch (TenderCollectionException e) {
+        } catch (SocietyCollectionException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
-    @GetMapping("/tender/all")
-    public ResponseEntity<?> getAllTender() {
-        List<Tender> tenders = tenderService.getAllTender();
-        return new ResponseEntity<>(tenders, tenders.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    @GetMapping("/society/all")
+    public ResponseEntity<?> getAllSociety() {
+        List<Society> society = societyService.getAllSociety();
+        return new ResponseEntity<>(society, society.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/tender/{id}")
-    public ResponseEntity<?> getTender(@PathVariable("id") String id) {
+    @GetMapping("/society/{id}")
+    public ResponseEntity<?> getSociety(@PathVariable("id") String id) {
         try {
-            return new ResponseEntity<>(tenderService.getTender(id), HttpStatus.OK);
+            return new ResponseEntity<>(societyService.getSociety(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
 
     }
 
-    @PutMapping("/tender/update")
-    public ResponseEntity<?> updateTender(@RequestParam(name = "id") String id, @RequestBody Tender tender) {
+    @PutMapping("/society/update/{id}")
+    public ResponseEntity<?> updateSociety(@PathVariable("id") String id, @RequestBody Society society) {
         try {
-            tenderService.updateTender(id, tender);
+            societyService.updateSociety(id, society);
             return new ResponseEntity<>("Update success", HttpStatus.OK);
         } catch (ConstraintViolationException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
-        } catch (TenderCollectionException e) {
+        } catch (SocietyCollectionException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
-
     }
 
 }

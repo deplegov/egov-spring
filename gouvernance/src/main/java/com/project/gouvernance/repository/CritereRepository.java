@@ -6,11 +6,11 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.project.gouvernance.model.Tender;
+import com.project.gouvernance.model.Critere;
 
 @Repository
-public interface TenderRepository extends MongoRepository<Tender, String> {
+public interface CritereRepository extends MongoRepository<Critere, String> {
 
-    @Query("{'reference': ?0}")
-    Optional<Tender> findByReference(String reference);
+    @Query("{'entitle': ?0}")
+    Optional<Critere> findByEntitle(String critere);
 }

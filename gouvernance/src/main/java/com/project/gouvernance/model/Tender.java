@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,11 +19,27 @@ import lombok.Setter;
 @Document(collection = "tender")
 public class Tender {
     @Id
+    @NotNull
     private String id;
+
+    @NotNull
     private String reference;
+
+    @NotNull
     private String title;
+
+    @NotNull
     private String description;
-    private List<String> critere;
+
+    @NotNull
+    private List<Critere> critere;
+
+    @NotNull
+    private Soumission soumission;
+
+    @NotNull
     private Date dateEmission;
+
+    @NotNull
     private Date dateLimit;
 }
