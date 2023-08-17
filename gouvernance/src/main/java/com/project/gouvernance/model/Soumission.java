@@ -27,5 +27,5 @@ public class Soumission {
     private Date dateSoumission;
 
     @NotNull
-    private Integer status;
+    private Integer status; // Reject : 0 , Valid : 1
 }
