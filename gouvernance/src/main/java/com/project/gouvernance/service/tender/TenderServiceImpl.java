@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.project.gouvernance.exception.TenderCollectionException;
@@ -44,33 +45,40 @@ public class TenderServiceImpl implements TenderService {
     }
 
     @Override
-    public List<Tender> getAllTenderFilter(String date1, String date2, String status) {
+    public List<Tender> getAllTenderFilter(String date1, String date2, String status, String ascendingString) {
         List<Tender> tenders = new ArrayList<Tender>();
+        boolean ascending = false;
+        if (ascendingString != null && ascendingString.equalsIgnoreCase("true")) {
+            ascending = true;
+        }
+
+        Sort sort = ascending ? Sort.by(Sort.Direction.ASC, "dateLimit")
+                : Sort.by(Sort.Direction.DESC, "dateLimit");
+
         if (date1 != null && date2 != null && status == null) {
             try {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date parsedDate1 = dateFormat.parse(date1);
                 Date parsedDate2 = dateFormat.parse(date2);
+                tenders = tenderRepo.findBetweenTwoDate(parsedDate1, parsedDate2, sort);
 
-                tenders = tenderRepo.findBetweenTwoDate(parsedDate1, parsedDate2);
             } catch (ParseException e) {
                 // Handle parsing exception
             }
         } else if (status != null && date1 == null && date2 == null) {
-            tenders = tenderRepo.findBySoumissionStatus(Integer.parseInt(status));
+            tenders = tenderRepo.findBySoumissionStatus(Integer.parseInt(status), sort);
         } else if (date1 != null && date2 != null && status != null) {
             try {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date parsedDate1 = dateFormat.parse(date1);
                 Date parsedDate2 = dateFormat.parse(date2);
-
                 tenders = tenderRepo.findBetweenTwoDateAndSoumissionStatus(parsedDate1, parsedDate2,
-                        Integer.parseInt(status));
+                        Integer.parseInt(status), sort);
             } catch (ParseException e) {
                 // Handle parsing exception
             }
         } else {
-            tenders = tenderRepo.findAll();
+            tenders = tenderRepo.findAll(sort);
         }
         return tenders;
     }

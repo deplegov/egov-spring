@@ -47,8 +47,9 @@ public class TenderController {
     @GetMapping("/tender/filter")
     public ResponseEntity<?> getAllTenderFilter(@RequestParam(name = "date1", required = false) String date1,
             @RequestParam(name = "date2", required = false) String date2,
-            @RequestParam(name = "status", required = false) String status) {
-        List<Tender> tender = tenderService.getAllTenderFilter(date1, date2, status);
+            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "ascending", required = false) String ascending) {
+        List<Tender> tender = tenderService.getAllTenderFilter(date1, date2, status, ascending);
         return new ResponseEntity<>(tender, tender.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
