@@ -11,7 +11,7 @@ public interface SoumissionService {
 
     public List<Soumission> getAllSoumission();
 
-    public List<Soumission> getAllSoumissionByFilter(String status, String societyId);
+    public List<Soumission> getAllSoumissionByFilter(String status, String societyId, String tenderId);
 
     public Soumission getSoumission(String id) throws SoumissionCollectionException;
 

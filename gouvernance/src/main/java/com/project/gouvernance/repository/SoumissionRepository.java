@@ -17,6 +17,9 @@ public interface SoumissionRepository extends MongoRepository<Soumission, String
     @Query("{'status': ?0}")
     List<Soumission> findAllByStatus(Integer status);
 
+    @Query("{'tender.id': ?0}")
+    List<Soumission> findAllByTenderId(String id);
+
     @Query("{'status': ?0,'society.id': ?1}")
     List<Soumission> findAllByStatusAndSocietyId(Integer status, String societyId);
 }

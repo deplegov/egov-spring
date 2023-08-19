@@ -38,7 +38,7 @@ public class SoumissionServiceImpl implements SoumissionService {
     }
 
     @Override
-    public List<Soumission> getAllSoumissionByFilter(String status, String societyId) {
+    public List<Soumission> getAllSoumissionByFilter(String status, String societyId, String tenderId) {
         List<Soumission> soumission = new ArrayList<>();
 
         if (societyId != null && status == null) {
@@ -47,6 +47,8 @@ public class SoumissionServiceImpl implements SoumissionService {
             soumission = soumissionRepo.findAllByStatus(Integer.parseInt(status));
         } else if (societyId != null && status != null) {
             soumission = soumissionRepo.findAllByStatusAndSocietyId(Integer.parseInt(status), societyId);
+        } else if (tenderId != null) {
+            soumission = soumissionRepo.findAllByTenderId(tenderId);
         } else {
             soumission = soumissionRepo.findAll();
         }

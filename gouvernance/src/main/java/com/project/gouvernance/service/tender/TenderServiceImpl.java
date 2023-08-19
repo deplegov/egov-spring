@@ -111,6 +111,9 @@ public class TenderServiceImpl implements TenderService {
             tenderUpdate
                     .setDateLimit(
                             tender.getDateLimit() != null ? tender.getDateLimit() : tenderUpdate.getDateLimit());
+            tenderUpdate.setTenderStatus(
+                    tender.getTenderStatus() != null ? tender.getTenderStatus() : tenderUpdate.getTenderStatus());
+
             tenderRepo.save(tenderUpdate);
         } else
             throw new TenderCollectionException(TenderCollectionException.NotFoundException(id));

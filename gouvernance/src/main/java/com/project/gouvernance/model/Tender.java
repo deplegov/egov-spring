@@ -35,11 +35,11 @@ public class Tender {
     private List<Critere> critere;
 
     @NotNull
-    private Soumission soumission;
-
-    @NotNull
     private Date dateEmission;
 
     @NotNull
     private Date dateLimit;
+
+    @NotNull
+    private Integer tenderStatus; // 0: ouvert , 1: évaluation en cours, 2: clôturé
 }

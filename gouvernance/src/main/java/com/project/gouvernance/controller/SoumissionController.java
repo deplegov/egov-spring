@@ -42,9 +42,11 @@ public class SoumissionController {
     }
 
     @GetMapping("/soumission/filter")
-    public ResponseEntity<?> getAllSoumissionFilter(@RequestParam(name = "society", required = false) String societyId,
-            @RequestParam(name = "status", required = false) String status) {
-        List<Soumission> soumission = soumissionService.getAllSoumissionByFilter(status, societyId);
+    public ResponseEntity<?> getAllSoumissionFilter(
+            @RequestParam(name = "society", required = false) String societyId,
+            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "tender", required = false) String tenderId) {
+        List<Soumission> soumission = soumissionService.getAllSoumissionByFilter(status, societyId, tenderId);
         return new ResponseEntity<>(soumission, soumission.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 

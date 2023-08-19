@@ -27,5 +27,8 @@ public class Soumission {
     private Date dateSoumission;
 
     @NotNull
+    private Tender tender;
+
+    @NotNull
     private Integer status; // Reject : 0 , Valid : 1
 }
