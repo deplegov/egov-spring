@@ -1,5 +1,6 @@
 package com.project.gouvernance.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
@@ -31,4 +32,7 @@ public class Soumission {
 
     @NotNull
     private Integer status; // Reject : 0 , Valid : 1
+
+    @NotNull
+    private ArrayList<String> files;
 }
